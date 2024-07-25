@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Shipping Cost Calculator</title>
+   
+    <script>
+        function calculateShippingCost(destination, weight, priority) {
+            if (destination !== "domestic" && destination !== "international") {
+                return "Invalid destination";
+            }
+            if (weight <= 0) {
+                return "Invalid weight";
+            }
+            if (priority !== "standard" && priority !== "express" && priority !== "priority") {
+                return "Invalid priority";
+            }
+            let baseCost = 0;
+            let additionalCost = 0;
+            if (destination === "domestic") {
+                if (priority === "standard") {
+                    baseCost = 5;
+                } else if (priority === "express") {
+                    baseCost = 10;
+                } else if (priority === "priority") {
+                    baseCost = 20;
+                }
+                if (weight > 10) {
+                    additionalCost = 10;
+                }
+            } else if (destination === "international") {
+                if (priority === "standard") {
+                    baseCost = 15;
+                } else if (priority === "express") {
+                    baseCost = 25;
+                } else if (priority === "priority") {
+                    baseCost = 50;
+                }
+                if (weight > 5) {
+                    additionalCost = 50;
+                }
+            }
+            let totalCost = (baseCost * weight) + additionalCost;
+            return totalCost;
+        }
+
+        function calculateAndDisplayCost() {
+            const destination = document.getElementById("destination").value;
+            const weight = parseFloat(document.getElementById("weight").value);
+            const priority = document.getElementById("priority").value;
+
+            const result = calculateShippingCost(destination, weight, priority);
+
+            document.getElementById("result").textContent = `Total Cost: $ ${result}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="shipping-container">
+        <h1>Shipping Cost Calculator</h1>
+        <form onsubmit="event.preventDefault(); calculateAndDisplayCost();">
+            <label for="destination">Destination:</label>
+            <select id="destination" required>
+                <option value="domestic">Domestic</option>
+                <option value="international">International</option>
+            </select>
+            <br><br>
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" step="0.1" required>
+            <br><br>
+            <label for="priority">Priority:</label>
+            <select id="priority" required>
+                <option value="standard">Standard</option>
+                <option value="express">Express</option>
+                <option value="priority">Priority</option>
+            </select>
+            <br><br>
+            <button type="submit">Calculate</button>
+        </form>
+        <h2 id="result"></h2>
+    </div>
+</body>
+</html>
