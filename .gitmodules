@@ -1,0 +1,6 @@
+[submodule "product-management"]
+	path = product-management
+	url = https://github.com/hafizhzikry24/FrontEnd_Test3
+[submodule "logistics-app"]
+	path = logistics-app
+	url = https://github.com/hafizhzikry24/FrontEnd_Test4
